@@ -1,5 +1,5 @@
 import React from "react";
-import error from "../../Images/error.jpg";
+import error from "../Images/error.jpg";
 export default function Error() {
   return (
     <div>

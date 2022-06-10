@@ -1,23 +1,23 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Contact from "../Component/MainComponents/Contact";
-import CreateBlog from "../Component/MainComponents/CreateBlog";
-import Education from "../Component/MainComponents/Education";
-import Fitness from "../Component/MainComponents/Fitness";
-import Fashion from "../Component/MainComponents/Fashion";
-import Food from "../Component/MainComponents/Food";
-import Sports from "../Component/MainComponents/Sports";
-import Technology from "../Component/MainComponents/Technology";
-import Travel from "../Component/MainComponents/Travel";
-import Error from "../Component/MainComponents/Error";
-import Home from "../Component/MainComponents/Home";
-import Login from "../Component/MainComponents/Login";
-import MyAccount from "../Component/MainComponents/MyAccount";
-import Movie from "../Component/MainComponents/Movie";
-import MyBlog from "../Component/MainComponents/MyBlog";
-import ReadMore from "../Component/MainComponents/ReadMore";
-import Register from "../Component/MainComponents/Register";
+import Contact from "../Component/Contact";
+import CreateBlog from "../Component/CreateBlog";
+import Education from "../Component/Education";
+import Fitness from "../Component/Fitness";
+import Fashion from "../Component/Fashion";
+import Food from "../Component/Food";
+import Sports from "../Component/Sports";
+import Technology from "../Component/Technology";
+import Travel from "../Component/Travel";
+import Error from "../Component/Error";
+import Home from "../Component/Home";
+import Login from "../Component/Login";
+import MyAccount from "../Component/MyAccount";
+import Movie from "../Component/Movie";
+import MyBlog from "../Component/MyBlog";
+import ReadMore from "../Component/ReadMore";
+import Register from "../Component/Register";
 export default function Router() {
   return (
     <>

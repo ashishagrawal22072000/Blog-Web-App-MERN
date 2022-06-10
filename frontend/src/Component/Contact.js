@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import contact from "../../Images/contact.jpg";
+import contact from "../Images/contact.jpg";
 import Navbar from "./Navbar";
 import emailjs from "emailjs-com";
 import { toast } from "react-toastify";

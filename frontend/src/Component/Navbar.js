@@ -19,9 +19,6 @@ export default function Navbar() {
 
       const data = await res.json();
       setpresentuser(data);
-      console.log(data);
-      console.log(presentuser);
-
       if (!res.status === 200) {
         const err = new Error(data.error);
         throw err;
@@ -74,27 +71,27 @@ export default function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0 fw-bold">
-                <li class="nav-item">
-                  <Link class="nav-link" aria-current="page" to="/">
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav me-auto ms-auto mb-2 mb-lg-0 fw-bold">
+                <li className="nav-item">
+                  <Link className="nav-link" aria-current="page" to="/">
                     Home
                   </Link>
                 </li>
 
-                <li class="nav-item">
+                <li className="nav-item">
                   <Link className="nav-link" to="/create">
                     Create
                   </Link>
                 </li>
-                <li class="nav-item">
+                <li className="nav-item">
                   <Link className="nav-link" to="/myblog">
                     myBlog
                   </Link>
                 </li>
 
-                <li class="nav-item">
-                  <Link class="nav-link" to="/contact">
+                <li className="nav-item">
+                  <Link className="nav-link" to="/contact">
                     Contact
                   </Link>
                 </li>
@@ -161,54 +158,54 @@ export default function Navbar() {
           </div>
         </div>
         <div>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav fw-bold">
-              <li class="nav-item mx-5">
-                <Link class="nav-link" aria-current="page" to="/">
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav fw-bold">
+              <li className="nav-item mx-5">
+                <Link className="nav-link" aria-current="page" to="/">
                   All
                 </Link>
               </li>
 
-              <li class="nav-item mx-5">
+              <li className="nav-item mx-5">
                 <Link className="nav-link" to="/education">
                   Education
                 </Link>
               </li>
-              <li class="nav-item mx-5">
+              <li className="nav-item mx-5">
                 <Link className="nav-link" to="/fashion">
                   Fashion
                 </Link>
               </li>
 
-              <li class="nav-item mx-5">
-                <Link class="nav-link" to="/fitness">
+              <li className="nav-item mx-5">
+                <Link className="nav-link" to="/fitness">
                   Fitness
                 </Link>
               </li>
-              <li class="nav-item mx-5">
-                <Link class="nav-link" aria-current="page" to="/food">
+              <li className="nav-item mx-5">
+                <Link className="nav-link" aria-current="page" to="/food">
                   Food
                 </Link>
               </li>
 
-              <li class="nav-item mx-5">
+              <li className="nav-item mx-5">
                 <Link className="nav-link" to="/sport">
                   Sport
                 </Link>
               </li>
-              <li class="nav-item mx-5">
+              <li className="nav-item mx-5">
                 <Link className="nav-link" to="/technology">
                   Technology
                 </Link>
               </li>
 
-              <li class="nav-item mx-5">
-                <Link class="nav-link" to="/travel">
+              <li className="nav-item mx-5">
+                <Link className="nav-link" to="/travel">
                   Travel
                 </Link>
               </li>
-              <li class="nav-item mx-5">
-                <Link class="nav-link" to="/movie">
+              <li className="nav-item mx-5">
+                <Link className="nav-link" to="/movie">
                   Movie
                 </Link>
               </li>

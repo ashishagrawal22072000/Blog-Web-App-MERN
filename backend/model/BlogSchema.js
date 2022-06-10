@@ -16,15 +16,12 @@ const blog = new mongoose.Schema({
 
   title: {
     type: String,
-    // required: true,
   },
   content: {
     type: String,
-    // required: true,
   },
   catagory: {
     type: String,
-    // required: true,
   },
   imgurl: {
     type: String,

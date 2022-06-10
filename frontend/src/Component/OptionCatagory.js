@@ -17,7 +17,7 @@ export default function OptionCatagory() {
       {catagory_options.map((ele, i) => {
         return (
           <>
-            <option value={ele || ""} key={i} class="text-light">
+            <option value={ele || ""} key={ele + i} className="text-light">
               {ele}
             </option>
           </>

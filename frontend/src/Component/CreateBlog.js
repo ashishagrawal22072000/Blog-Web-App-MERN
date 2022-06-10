@@ -27,7 +27,6 @@ export default function CreateBlog() {
       .post("http://api.cloudinary.com/v1_1/cldashish12/image/upload", formData)
       .then((res) => {
         setblog({ ...blog, imgurl: res.data.url });
-        console.log(res);
         setDisable(false);
       })
       .catch((err) => {
@@ -48,7 +47,6 @@ export default function CreateBlog() {
 
       const data = await res.json();
       setactiveuser(data);
-      console.log(data);
       if (!data.status === 200) {
         const err = new Error(data.error);
         throw err;
@@ -62,16 +60,7 @@ export default function CreateBlog() {
   const publish = async (e) => {
     e.preventDefault();
 
-    // if (blog.title === "" || blog.imgurl === "" || blog.content === "") {
-    //   toast.error("Please Fill All The Fields");
-    // } else if (
-    //   blog.catagory === "Please Select Catagory" ||
-    //   blog.catagory === ""
-    // ) {
-    //   toast.error("Please Select A Valid Catagory");
-    // } else if (blog.content.length < 1000) {
-    //   toast.error("Content Must contain minimum 1000 Letters");
-    // } else {
+   
     const { title, content, catagory, imgurl } = blog;
     const res = await fetch("/blog/create", {
       method: "POST",
@@ -90,7 +79,6 @@ export default function CreateBlog() {
     });
 
     const data = await res.json();
-    console.log(data.error);
     if (res.status === 200) {
       toast.success(data.message);
       setcontentlength(0);
@@ -102,7 +90,6 @@ export default function CreateBlog() {
       });
     } else {
       toast.error(data.error[0].msg);
-      // }
     }
   };
 

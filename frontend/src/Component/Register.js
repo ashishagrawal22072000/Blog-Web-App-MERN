@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import signup from "../../Images/signup.jpg";
+import signup from "../Images/signup.jpg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,7 +29,6 @@ export default function Register() {
     });
 
     const data = await res.json();
-    console.log(data);
     if (res.status === 400 || !data) {
       toast.error(data.error[0].msg);
     } else {

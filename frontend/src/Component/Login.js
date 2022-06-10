@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import login from "../../Images/login.jpg";
+import login from "../Images/login.jpg";
 import { useNavigate, Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
@@ -23,9 +23,9 @@ export default function Login() {
     });
 
     const data = await res.json();
-    console.log(data);
     if (res.status === 400 || !data) {
       toast.error(data.error[0].msg);
+      toast.error(data.error);
     } else {
       toast.success(data.message);
       navigate("/", { replace: true });
@@ -42,7 +42,7 @@ export default function Login() {
           <h1 className="text-center mt-3 ">Login YourSelf</h1>
           <form className="p-5 mt-5" method="POST">
             <div className="mb-5">
-              <label htmlFor="exampleInputEmail1" class="form-label fw-bold">
+              <label htmlFor="exampleInputEmail1" className="form-label fw-bold">
                 Email address
               </label>
               <input
@@ -61,13 +61,13 @@ export default function Login() {
                 }
               />
             </div>
-            <div class="mb-5">
-              <label htmlFor="exampleInputPassword1" class="form-label fw-bold">
+            <div className="mb-5">
+              <label htmlFor="exampleInputPassword1" className="form-label fw-bold">
                 Password
               </label>
               <input
                 type="password"
-                class="form-control border-dark border-bottom border-3 rounded-0"
+                className="form-control border-dark border-bottom border-3 rounded-0"
                 id="exampleInputPassword1"
                 style={{
                   backgroundColor: "transparent",
@@ -81,7 +81,7 @@ export default function Login() {
               />
             </div>
 
-            <button type="submit" class="btn btn-dark" onClick={loginuser}>
+            <button type="submit" className="btn btn-dark" onClick={loginuser}>
               Login
             </button>
             <div>

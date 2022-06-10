@@ -1,7 +1,5 @@
-const express = require("express");
 const jwt = require("jsonwebtoken");
 const userModel = require("../model/schema");
-const cookieParser = require("cookie-parser");
 const { SECRET_KEY } = require("../config");
 const Authenticate = async (req, res, next) => {
   try {
@@ -21,7 +19,7 @@ const Authenticate = async (req, res, next) => {
     req.userID = rootUser._id;
     next();
   } catch (err) {
-    res.status(401).send("Unauthorized :  No Token Provided");
+    res.status(400).send("Unauthorized :  No Token Provided");
     console.log(err);
   }
 };

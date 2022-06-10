@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../MainComponents/Navbar";
+import Navbar from "../Component/Navbar";
 import Card from "./Card";
-import banner from "../../Images/Banner.jpg";
+import banner from "../Images/Banner.jpg";
 import { Link } from "react-router-dom";
 export default function Home() {
   const [allblog, setallblog] = useState([]);
@@ -35,19 +35,19 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div class="card bg-dark text-white">
-        <img class="card-img" src={banner} alt="Card image" />
+      <div className="card bg-dark text-white">
+        <img className="card-img" src={banner} alt="Card image" />
       </div>
       {loading ? (
         <>
           <div className="container d-flex justify-content-center align-item-center mt-5">
             <div className="container d-flex justify-content-center align-item-center mt-5">
               <div
-                class="spinner-border mt-5"
+                className="spinner-border mt-5"
                 style={{ width: "3rem", height: "3rem" }}
                 role="status"
               >
-                <span class="sr-only"></span>
+                <span className="sr-only"></span>
               </div>
             </div>
           </div>

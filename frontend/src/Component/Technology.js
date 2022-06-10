@@ -4,14 +4,14 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "./Card";
 import Navbar from "./Navbar";
-import Loader from "./Loader";
-import eduImage from '../../Images/education.jpg'
-export default function Education() {
+
+export default function Technology() {
   const [blog, setblog] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const getuserblog = async () => {
     try {
-      const res = await fetch("/blog/education", {
+      const res = await fetch("/blog/technology", {
         method: "GET",
         headers: {
           Accept: "appllication/json",
@@ -22,7 +22,8 @@ export default function Education() {
 
       const data = await res.json();
       setblog(data);
-      setLoading(false);
+      setLoading(false)
+
       if (!res.status === 200) {
         const err = new Error(data.error);
         throw err;
@@ -37,20 +38,17 @@ export default function Education() {
   }, []);
   return (
     <>
-      <Navbar />
-      <div class="card bg-dark text-white">
-        <img class="card-img" src={eduImage} alt="Card image"  />
-      </div>
-      {loading ? (
+    <Navbar />
+    {loading ? (
         <>
           <div className="container d-flex justify-content-center align-item-center mt-5">
             <div className="container d-flex justify-content-center align-item-center mt-5">
               <div
-                class="spinner-border mt-5"
+                className="spinner-border mt-5"
                 style={{ width: "3rem", height: "3rem" }}
                 role="status"
               >
-                <span class="sr-only"></span>
+                <span className="sr-only">Loading...</span>
               </div>
             </div>
           </div>

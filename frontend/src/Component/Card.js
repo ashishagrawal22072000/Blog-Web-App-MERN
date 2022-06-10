@@ -4,7 +4,6 @@ import { MdCreate } from "react-icons/md";
 import { BsCalendar2DateFill } from "react-icons/bs";
 import { FaCommentDots } from "react-icons/fa";
 export default function Card({ data }) {
-  console.log(data);
   return (
     <div>
       <div className="container-fluid  p-5 mt-5">
@@ -16,7 +15,7 @@ export default function Card({ data }) {
                   <div
                     className="card mx-3 my-3 shadow-lg border border-5 p-3"
                     style={{ width: "50rem", height: "60rem" }}
-                    key={ele.id}
+                    key={ele._id}
                   >
                     <div className="hover">
                       <Link to={`/blog/${ele._id}`}>

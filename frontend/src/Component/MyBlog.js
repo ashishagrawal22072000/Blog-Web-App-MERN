@@ -55,8 +55,6 @@ export default function MyBlog() {
       catagory: editBlog[0].catagory,
       imgurl: editBlog[0].imgurl,
     });
-    console.log(editBlog[0].title);
-    console.log(editData);
   };
 
   useEffect(() => {
@@ -114,7 +112,6 @@ export default function MyBlog() {
     });
 
     const data = await res.json();
-    console.log(data);
     if (res.status === 200) {
       toast.success(data.message);
       setEditData({
@@ -138,11 +135,11 @@ export default function MyBlog() {
           <div className="container d-flex justify-content-center align-item-center mt-5">
             <div className="container d-flex justify-content-center align-item-center mt-5">
               <div
-                class="spinner-border mt-5"
+                className="spinner-border mt-5"
                 style={{ width: "3rem", height: "3rem" }}
                 role="status"
               >
-                <span class="sr-only"></span>
+                <span className="sr-only"></span>
               </div>
             </div>
           </div>
@@ -232,35 +229,35 @@ export default function MyBlog() {
         </>
       )}
       <div
-        class="modal fade"
+        className="modal fade"
         id="exampleModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
                 Edit Blog
               </h5>
               <button
                 type="button"
-                class="close"
+                className="close"
                 data-dismiss="modal"
                 aria-label="Close"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <form>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="title">Title</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="title"
                     aria-describedby="emailHelp"
                     value={editData.title}
@@ -269,11 +266,11 @@ export default function MyBlog() {
                     }
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="content">Content</label>
                   <textarea
                     rows="10"
-                    class="form-control"
+                    className="form-control"
                     id="content"
                     placeholder="Content..."
                     value={editData.content}
@@ -282,7 +279,7 @@ export default function MyBlog() {
                     }
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="content">catagory</label>
                   <select
                     className="p-3 bg-dark text-light fw-bold mx-5"
@@ -294,7 +291,7 @@ export default function MyBlog() {
                     <OptionCatagory />
                   </select>
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label htmlFor="message">Upload Image</label>
                   <input
                     type="file"
@@ -307,17 +304,17 @@ export default function MyBlog() {
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-dismiss="modal"
               >
                 Close
               </button>
               <button
                 type="button"
-                class="btn btn-primary"
+                className="btn btn-primary"
                 data-dismiss="modal"
                 disabled={disable}
                 onClick={updateBlog}

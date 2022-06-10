@@ -4,14 +4,13 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "./Card";
 import Navbar from "./Navbar";
-import foodImage from "../../Images/food.jpg";
-export default function Food() {
+export default function Travel() {
   const [blog, setblog] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const getuserblog = async () => {
     try {
-      const res = await fetch("/blog/food", {
+      const res = await fetch("/blog/travel", {
         method: "GET",
         headers: {
           Accept: "appllication/json",
@@ -38,19 +37,16 @@ export default function Food() {
   return (
     <>
       <Navbar />
-      <div class="card bg-dark text-white">
-        <img class="card-img" src={foodImage} alt="Card image" height="700px" />
-      </div>
       {loading ? (
         <>
           <div className="container d-flex justify-content-center align-item-center mt-5">
             <div className="container d-flex justify-content-center align-item-center mt-5">
               <div
-                class="spinner-border mt-5"
+                className="spinner-border mt-5"
                 style={{ width: "3rem", height: "3rem" }}
                 role="status"
               >
-                <span class="sr-only"></span>
+                <span className="sr-only">Loading...</span>
               </div>
             </div>
           </div>

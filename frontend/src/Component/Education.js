@@ -2,16 +2,15 @@ import { useState, useEffect } from "react";
 
 import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
 import Card from "./Card";
-import fitImage from "../../Images/fitness.jpg";
-export default function Fitness() {
+import Navbar from "./Navbar";
+import eduImage from '../Images/education.jpg'
+export default function Education() {
   const [blog, setblog] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const getuserblog = async () => {
     try {
-      const res = await fetch("/blog/fitness", {
+      const res = await fetch("/blog/education", {
         method: "GET",
         headers: {
           Accept: "appllication/json",
@@ -23,7 +22,6 @@ export default function Fitness() {
       const data = await res.json();
       setblog(data);
       setLoading(false);
-
       if (!res.status === 200) {
         const err = new Error(data.error);
         throw err;
@@ -39,19 +37,19 @@ export default function Fitness() {
   return (
     <>
       <Navbar />
-      <div class="card bg-dark text-white">
-        <img class="card-img" src={fitImage} alt="Card image" />
+      <div className="card bg-dark text-white">
+        <img className="card-img" src={eduImage} alt="Card image"  />
       </div>
       {loading ? (
         <>
           <div className="container d-flex justify-content-center align-item-center mt-5">
             <div className="container d-flex justify-content-center align-item-center mt-5">
               <div
-                class="spinner-border mt-5"
+                className="spinner-border mt-5"
                 style={{ width: "3rem", height: "3rem" }}
                 role="status"
               >
-                <span class="sr-only"></span>
+                <span className="sr-only"></span>
               </div>
             </div>
           </div>

@@ -8,7 +8,6 @@ export default function ReadMore() {
   const [blog, setblog] = useState({});
 
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const currentBlog = async () => {
     try {
@@ -23,7 +22,6 @@ export default function ReadMore() {
 
       const data = await res.json();
       setblog(data);
-      console.log("data", data);
       if (!res.status === 200) {
         const err = new Error(data.error);
         throw err;

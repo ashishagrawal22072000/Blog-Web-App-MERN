@@ -10,7 +10,7 @@ router.use(express.json());
 const authentication = require("../middleware/authenticate");
 const userModel = require("../model/schema");
 const blogModel = require("../model/BlogSchema");
-const { body, check, validationResult } = require("express-validator");
+const { body,validationResult } = require("express-validator");
 router.post(
   "/register",
   [
@@ -77,7 +77,6 @@ router.post(
       const a = await registeruser.save();
       res.status(200).json({ message: "user register successfully" });
       console.log(a);
-      // }
     } catch (err) {
       console.log(err);
     }

@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { useParams, useNavigate } from "react-router-dom";
 
 export default function Comment({ data }) {
-  console.log("Our Blog Is", data);
   const [comments, setComments] = useState({
     name: "",
     email: "",
@@ -24,7 +23,6 @@ export default function Comment({ data }) {
     });
 
     const data = await res.json();
-    console.log(data);
     if (res.status === 200) {
       toast.success(data.message);
       setComments({
@@ -41,10 +39,10 @@ export default function Comment({ data }) {
       <div className="container-fluid my-3 p-5">
         <h1>Leave A Comment</h1>
         <form>
-          <div class="mb-3">
+          <div className="mb-3">
             <textarea
               type="text"
-              class="form-control"
+              className="form-control"
               id="comment"
               aria-describedby="emailHelp"
               style={{ height: "200px" }}
@@ -55,10 +53,10 @@ export default function Comment({ data }) {
               }
             />
           </div>
-          <div class="mb-3 d-flex">
+          <div className="mb-3 d-flex">
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               id="name"
               placeholder="Name"
               value={comments.name}
@@ -68,7 +66,7 @@ export default function Comment({ data }) {
             />
             <input
               type="email"
-              class="form-control mx-3"
+              className="form-control mx-3"
               id="name"
               placeholder="Email"
               value={comments.email}
@@ -78,7 +76,7 @@ export default function Comment({ data }) {
             />
           </div>
 
-          <button type="submit" class="btn btn-danger" onClick={postComment}>
+          <button type="submit" className="btn btn-danger" onClick={postComment}>
             Post Comment
           </button>
         </form>
