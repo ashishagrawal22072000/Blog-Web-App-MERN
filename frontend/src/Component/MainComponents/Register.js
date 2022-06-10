@@ -14,37 +14,27 @@ export default function Register() {
     userimage: "",
   });
   const [disable, setDisable] = useState(false);
-  const emailregex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
-  const passregex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-
   const navigate = useNavigate();
-
   const registeruser = async (e) => {
     e.preventDefault();
 
     const { username, email, password, userimage } = register;
-    if (!emailregex.test(register.email)) {
-      toast.error("Invalid Email");
-    } else if (!passregex.test(register.password)) {
-      toast.error(
-        "Password must contain Minimum eight characters, at least one letter, one number and one special character:"
-      );
-    } else {
-      const res = await fetch("/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, email, password, userimage }),
-      });
 
-      const data = await res.json();
-      if (res.status === 422 || !data) {
-        toast.error(data.error);
-      } else {
-        toast.success(data.message);
-        navigate("/login", { replace: true });
-      }
+    const res = await fetch("/user/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, email, password, userimage }),
+    });
+
+    const data = await res.json();
+    console.log(data);
+    if (res.status === 400 || !data) {
+      toast.error(data.error[0].msg);
+    } else {
+      toast.success(data.message);
+      navigate("/login", { replace: true });
     }
   };
   const uploadImage = (file) => {
@@ -79,7 +69,7 @@ export default function Register() {
           <form className="p-5" method="POST">
             <div className="mb-5">
               <label
-                htmlFor="exampleInputEmail1"
+                htmlFor="username"
                 className="form-label fw-bold text-light"
               >
                 User Name
@@ -87,7 +77,7 @@ export default function Register() {
               <input
                 type="text"
                 className="form-control border-bottom border-3 rounded-0"
-                id="exampleInputEmail1"
+                id="username"
                 aria-describedby="emailHelp"
                 style={{
                   backgroundColor: "transparent",
@@ -103,7 +93,7 @@ export default function Register() {
             </div>
             <div className="mb-5">
               <label
-                htmlFor="exampleInputEmail1"
+                htmlFor="email"
                 className="form-label fw-bold text-light"
               >
                 Email address
@@ -111,7 +101,7 @@ export default function Register() {
               <input
                 type="email"
                 className="form-control border-bottom border-3 rounded-0"
-                id="exampleInputEmail1"
+                id="email"
                 aria-describedby="emailHelp"
                 style={{
                   backgroundColor: "transparent",
@@ -127,7 +117,7 @@ export default function Register() {
             </div>
             <div className="mb-5">
               <label
-                htmlFor="exampleInputPassword1"
+                htmlFor="password"
                 className="form-label fw-bold text-light"
               >
                 Password
@@ -135,7 +125,7 @@ export default function Register() {
               <input
                 type="password"
                 className="form-control border-bottom border-3 rounded-0"
-                id="exampleInputPassword1"
+                id="password"
                 style={{
                   backgroundColor: "transparent",
                   outline: "none",

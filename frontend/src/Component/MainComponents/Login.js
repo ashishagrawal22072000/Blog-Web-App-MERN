@@ -23,9 +23,9 @@ export default function Login() {
     });
 
     const data = await res.json();
-
-    if (res.status === 400 || res.status === 422 || !data) {
-      toast.error(data.error);
+    console.log(data);
+    if (res.status === 400 || !data) {
+      toast.error(data.error[0].msg);
     } else {
       toast.success(data.message);
       navigate("/", { replace: true });

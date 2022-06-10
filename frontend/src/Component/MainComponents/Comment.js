@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { useParams, useNavigate } from "react-router-dom";
@@ -32,10 +32,8 @@ export default function Comment({ data }) {
         email: "",
         comment: "",
       });
-
-      //   calldata();
     } else {
-      toast.error(data.error);
+      toast.error(data.error[0].msg);
     }
   };
   return (
@@ -86,13 +84,15 @@ export default function Comment({ data }) {
         </form>
         <div className="container-fluid my-5">
           <h1>{data.comments?.length}Comments</h1>
-          <div className="d-flex justify-content-start">
+          <div className="container-fluid d-flex justify-content-start align-items-center">
             {data.comments?.map((ele) => {
               return (
                 <>
                   <div className="border p-3 border-5 mx-5 container-fluid">
                     <div className="d-flex">
-                      <h3 className="fw-bold bg-dark text-light p-3 rounded-circle">{ele?.name.slice(0, 2)}</h3>
+                      <h3 className="fw-bold bg-dark text-light p-3 rounded-circle">
+                        {ele?.name.slice(0, 2)}
+                      </h3>
                       <span className="mx-3 my-3">{ele?.email}</span>
                     </div>
 

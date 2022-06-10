@@ -35,7 +35,7 @@ export default function Card({ data }) {
                       </div>
                       <div className="container d-flex justify-content-around my-3">
                         <h5 className="text-secondary">
-                          <MdCreate /> {ele.publisher.slice(0, 2).toUpperCase()}
+                          <MdCreate /> {ele.publisher}
                         </h5>
                         <h5 className="text-secondary">
                           <BsCalendar2DateFill /> {ele.publishDate.slice(0, 10)}

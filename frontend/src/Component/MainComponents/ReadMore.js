@@ -51,7 +51,7 @@ export default function ReadMore() {
           </div>
           <div className="container d-flex justify-start my-3">
             <h5 className="text-secondary">
-              <MdCreate /> {blog.publisher?.slice(0, 2).toUpperCase()}
+              <MdCreate /> {blog.publisher}
             </h5>
             <h5 className="text-secondary mx-5">
               <BsCalendar2DateFill /> {blog.publishDate?.slice(0, 10)}
@@ -88,7 +88,7 @@ export default function ReadMore() {
         </div>
       </div>
 
-      <Comment data={blog}/>
+      <Comment data={blog} />
     </>
   );
 }

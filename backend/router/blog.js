@@ -17,56 +17,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// router.get("/account", authentication, (req, res) => {
-//   res.send(req.rootUser);
-// });
-
-// router.get("/getdata", authentication, (req, res) => {
-//   res.send(req.rootUser);
-// });
-
-// router.get("/create", authentication, (req, res) => {
-//   res.send(req.userID);
-// });
-// router.patch("/updateProfile", authentication, async (req, res) => {
-//   try {
-//     const findandUpdateUser = await userModel.findByIdAndUpdate(
-//       { _id: req.userID },
-//       { ...req.body }
-//     );
-//     res.json({ message: "user update SuccessFully" });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
-
-// router.post("/createblog", async (req, res) => {
-//   try {
-//     const { title, content, catagory, imgurl } = req.body;
-
-//     if (!title || !content || !catagory || !imgurl) {
-//       return res
-//         .status(422)
-//         .json({ error: "please Fill All The Required Fields" });
-//     } else {
-//       const createBlog = new blogModel({
-//         userID: req.body.userid,
-//         publishDate: new Date(),
-//         publisher: req.body.publisher,
-//         title,
-//         content,
-//         catagory,
-//         imgurl,
-//       });
-
-//       const a = await createBlog.save();
-//       res.status(200).json({ message: "Blog Published" });
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
-
 router.get("/myblog", authentication, async (req, res) => {
   try {
     const findUserBlog = await blogModel.find({ userID: req.userID });
@@ -262,24 +212,36 @@ router.delete("/account", async (req, res) => {
   }
 });
 
-router.patch("/comment", async (req, res) => {
-  try {
-    const postComment = await blogModel.findByIdAndUpdate(
-      { _id: req.body.id },
-      {
-        $push: {
-          comments: {
-            name: req.body.name,
-            email: req.body.email,
-            comment: req.body.comment,
-          },
-        },
+router.patch(
+  "/comment",
+  [
+    body("name", "Please Provide A Valid Name").isLength({ min: 5 }),
+    body("comment", "Please Provide A Valid Comment").isLength({ min: 5 }),
+    body("email", "Please Provide A Valid Email-ID").isEmail(),
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.status(400).json({ error: errors.array() });
       }
-    );
-    return res.status(200).json({ message: "Comment Posted" });
-  } catch (err) {
-    console.log(err);
+      const postComment = await blogModel.findByIdAndUpdate(
+        { _id: req.body.id },
+        {
+          $push: {
+            comments: {
+              name: req.body.name,
+              email: req.body.email,
+              comment: req.body.comment,
+            },
+          },
+        }
+      );
+      return res.status(200).json({ message: "Comment Posted" });
+    } catch (err) {
+      console.log(err);
+    }
   }
-});
+);
 
 module.exports = router;
