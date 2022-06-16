@@ -51,11 +51,6 @@ export default function Card({ data }) {
                           {ele.content.slice(0, 700)}...
                         </p>
                       </div>
-                      <div className=" my-3 d-flex">
-                        <div>
-                          <h4 className="text-secondary"><FaCommentDots /> {ele.comments?.length}</h4>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </>

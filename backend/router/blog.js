@@ -145,21 +145,21 @@ router.post(
       let errors = validationResult(req);
       if (!errors.isEmpty()) {
         res.status(400).json({ error: errors.array() });
-      }
-      const createBlog = new blogModel({
-        userID: userid,
-        publishDate: new Date(),
-        publisher: req.body.publisher,
-        title,
-        content,
-        catagory,
-        imgurl,
-      });
+      } else {
+        const createBlog = new blogModel({
+          userID: userid,
+          publishDate: new Date(),
+          publisher: req.body.publisher,
+          title,
+          content,
+          catagory,
+          imgurl,
+        });
 
-      const a = await createBlog.save();
-      res.status(200).json({ message: "Blog Published" });
-      console.log(a);
-      // }
+        const a = await createBlog.save();
+        res.status(200).json({ message: "Blog Published" });
+        console.log(a);
+      }
     } catch (err) {
       console.log(err);
     }

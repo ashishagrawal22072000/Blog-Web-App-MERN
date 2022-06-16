@@ -4,102 +4,181 @@ import { toast } from "react-toastify";
 import { useParams, useNavigate } from "react-router-dom";
 
 export default function Comment({ data }) {
-  const [comments, setComments] = useState({
-    name: "",
-    email: "",
+  const [addComments, setAddComments] = useState({
     comment: "",
   });
+  const navigate = useNavigate();
+  const [getComments, setGetComments] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [display, setDisplay] = useState(false);
   const { id } = useParams();
   const postComment = async (e) => {
     e.preventDefault();
-
-    const { name, email, comment } = comments;
-    const res = await fetch("/blog/comment", {
-      method: "PATCH",
+    calldata();
+    const { comment } = addComments;
+    const res = await fetch("/comment", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: id, name, email, comment }),
+      body: JSON.stringify({ id: id, comment }),
     });
 
     const data = await res.json();
+
     if (res.status === 200) {
       toast.success(data.message);
-      setComments({
-        name: "",
-        email: "",
+      setLoading(true);
+      setAddComments({
         comment: "",
       });
-    } else {
-      toast.error(data.error[0].msg);
+      fetchComments();
     }
   };
+
+  const fetchComments = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/comment/${id}`, {
+        method: "GET",
+        headers: {
+          Accept: "appllication/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await res.json();
+      setGetComments(data);
+      setLoading(false);
+      // console.log(data);
+      if (!res.status === 200) {
+        const err = new Error(data.error);
+        throw err;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  function handleFocus() {
+    setDisplay(true);
+  }
+  const calldata = async () => {
+    try {
+      const res = await fetch("/user", {
+        method: "GET",
+        headers: {
+          Accept: "appllication/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await res.json();
+      // setactiveuser(data);
+      if (!data.status === 200) {
+        const err = new Error(data.error);
+        throw err;
+      }
+    } catch (err) {
+      console.log(err);
+      navigate("/login", { replace: true });
+    }
+  };
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
   return (
     <div>
       <div className="container-fluid my-3 p-5">
-        <h1>Leave A Comment</h1>
-        <form>
-          <div className="mb-3">
-            <textarea
-              type="text"
-              className="form-control"
-              id="comment"
-              aria-describedby="emailHelp"
-              style={{ height: "200px" }}
-              placeholder="Comment"
-              value={comments.comment}
-              onChange={(e) =>
-                setComments({ ...comments, comment: e.target.value })
-              }
-            />
-          </div>
-          <div className="mb-3 d-flex">
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              placeholder="Name"
-              value={comments.name}
-              onChange={(e) =>
-                setComments({ ...comments, name: e.target.value })
-              }
-            />
-            <input
-              type="email"
-              className="form-control mx-3"
-              id="name"
-              placeholder="Email"
-              value={comments.email}
-              onChange={(e) =>
-                setComments({ ...comments, email: e.target.value })
-              }
-            />
-          </div>
-
-          <button type="submit" className="btn btn-danger" onClick={postComment}>
-            Post Comment
-          </button>
-        </form>
         <div className="container-fluid my-5">
-          <h1>{data.comments?.length}Comments</h1>
-          <div className="container-fluid d-flex justify-content-start align-items-center">
-            {data.comments?.map((ele) => {
-              return (
-                <>
-                  <div className="border p-3 border-5 mx-5 container-fluid">
-                    <div className="d-flex">
-                      <h3 className="fw-bold bg-dark text-light p-3 rounded-circle">
-                        {ele?.name.slice(0, 2)}
-                      </h3>
-                      <span className="mx-3 my-3">{ele?.email}</span>
-                    </div>
+          <h3>{getComments?.length} Comments</h3>
 
-                    <p>{ele?.comment}</p>
+          <form>
+            <div className="mb-3">
+              <input
+                type="text"
+                className="form-control w-100"
+                id="comment"
+                aria-describedby="emailHelp"
+                style={{
+                  borderTop: 0,
+                  borderLeft: 0,
+                  borderRight: 0,
+                  borderBottom: "2px solid",
+                  outline: "none",
+                  borderRadius: 0,
+                }}
+                placeholder="Add a comment..."
+                value={addComments.comment}
+                onChange={(e) => setAddComments({ comment: e.target.value })}
+                onFocus={handleFocus}
+              />
+            </div>
+            {display ? (
+              <>
+                <div>
+                  <button
+                    type="submit"
+                    className={`btn btn-danger  ${
+                      addComments?.comment?.length > 0 ? "" : "disabled"
+                    }`}
+                    onClick={postComment}
+                  >
+                    Post Comment
+                  </button>
+                  <button
+                    className="btn btn-dark mx-3"
+                    onClick={() => {
+                      setDisplay(false);
+                      setAddComments({ comment: "" });
+                    }}
+                  >
+                    cancel
+                  </button>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+          </form>
+          {loading ? (
+            <>
+              <div className="container d-flex justify-content-center align-item-center mt-5">
+                <div className="container d-flex justify-content-center align-item-center mt-5">
+                  <div
+                    className="spinner-border mt-5"
+                    style={{ width: "3rem", height: "3rem" }}
+                    role="status"
+                  >
+                    <span className="sr-only"></span>
                   </div>
-                </>
-              );
-            })}
-          </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="container-fluid my-5">
+              {getComments?.map((ele) => {
+                return (
+                  <>
+                    <div className="p-3 container-fluid d-flex">
+                      <div className="d-flex">
+                        <h3 className="fw-bold bg-dark text-light p-3 rounded-circle">
+                          {ele?.name.slice(0, 2)}
+                        </h3>
+                      </div>
+                      <div>
+                        <span className="mx-3 my-3">{ele?.name}</span>
+                        <p className="mx-3">{ele?.comment}</p>
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>

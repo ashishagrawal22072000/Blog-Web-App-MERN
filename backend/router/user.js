@@ -115,7 +115,7 @@ router.post(
         console.log(token);
 
         res.cookie("owner", token, {
-          expires: new Date(Date.now() + 10000000000),
+          expires: new Date(Date.now() + 100000000),
           httpOnly: true,
         });
 
