@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 export default function CreateBlog() {
   const [activeuser, setactiveuser] = useState();
   const [disable, setDisable] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const date = new Date();
@@ -28,6 +29,7 @@ export default function CreateBlog() {
       .then((res) => {
         setblog({ ...blog, imgurl: res.data.url });
         setDisable(false);
+        setLoading(false);
       })
       .catch((err) => {
         toast.error(err);
@@ -60,7 +62,6 @@ export default function CreateBlog() {
   const publish = async (e) => {
     e.preventDefault();
 
-   
     const { title, content, catagory, imgurl } = blog;
     const res = await fetch("/blog/create", {
       method: "POST",
@@ -95,6 +96,7 @@ export default function CreateBlog() {
 
   const file = () => {
     setDisable(true);
+    setLoading(true);
   };
 
   useEffect(() => {
@@ -181,14 +183,29 @@ export default function CreateBlog() {
                       <label htmlFor="message">
                         <h1>Upload Image</h1>
                       </label>
-                      <input
-                        type="file"
-                        id="message"
-                        accept="image/png, image/jpeg,image/jpg"
-                        className="form-control  w-100"
-                        onChange={(e) => uploadImage(e.target.files[0])}
-                        onClick={file}
-                      />
+                      <span className="d-flex">
+                        <input
+                          type="file"
+                          id="message"
+                          accept="image/png, image/jpeg,image/jpg"
+                          className="form-control  w-100"
+                          onChange={(e) => uploadImage(e.target.files[0])}
+                          onClick={file}
+                        />
+                        {loading ? (
+                          <>
+                            <div
+                              className="spinner-border mt-2 mx-2"
+                              style={{ width: "1rem", height: "1rem" }}
+                              role="status"
+                            >
+                              <span className="sr-only"></span>
+                            </div>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </span>
                     </div>
                   </div>
                 </div>

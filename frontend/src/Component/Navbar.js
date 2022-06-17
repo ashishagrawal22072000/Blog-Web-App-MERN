@@ -54,7 +54,7 @@ export default function Navbar() {
   };
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light p-3 d-flex flex-column">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light p-3 d-flex flex-column fixed-top">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <h1>Blog.com</h1>

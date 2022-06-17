@@ -38,7 +38,7 @@ export default function ReadMore() {
   return (
     <>
       <Navbar />
-      <div className="container-fluid mt-3 p-5">
+      <div className="container-fluid mt-5 p-5">
         <div className="row p-2">
           {/* <div className="d-flex justify-content-between">
             

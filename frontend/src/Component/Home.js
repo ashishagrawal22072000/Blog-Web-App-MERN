@@ -35,7 +35,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div className="card bg-dark text-white">
+      <div className="card bg-dark text-white mt-5 my-5">
         <img className="card-img" src={banner} alt="Card image" />
       </div>
       {loading ? (
