@@ -94,7 +94,10 @@ export default function Login() {
                 />
                 {show ? (
                   <>
-                    <BsFillEyeFill onClick={() => setShow(false)} />
+                    <BsFillEyeFill
+                      onClick={() => setShow(false)}
+                      style={{ height: "25px", width: "25px" }}
+                    />
                   </>
                 ) : (
                   <>
@@ -102,6 +105,7 @@ export default function Login() {
                       onClick={() => {
                         setShow(true);
                       }}
+                      style={{ height: "25px", width: "25px" }}
                     />
                   </>
                 )}
