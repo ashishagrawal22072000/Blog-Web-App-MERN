@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 export default function MyAccount() {
   const [presentuser, setpresentuser] = useState({});
   const [disable, setDisable] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const updateprofile = async (e) => {
@@ -82,6 +83,7 @@ export default function MyAccount() {
       .then((res) => {
         setpresentuser({ ...presentuser, userimage: res.data.url });
         setDisable(false);
+        setLoading(false);
       })
       .catch((err) => {
         toast.error(err);
@@ -90,6 +92,7 @@ export default function MyAccount() {
 
   const file = () => {
     setDisable(true);
+    setLoading(true)
   };
 
   useEffect(() => {
@@ -103,21 +106,39 @@ export default function MyAccount() {
         <div className="container p-5 mt-5 d-flex justify-content-center">
           <div className="container">
             <img src={presentuser.userimage} height="550px" width="550px" />
-            <input
-              type="file"
-              id="image"
-              accept="image/png, image/jpeg,image/jpg"
-              className="form-control  w-100"
-              onChange={(e) => uploadImage(e.target.files[0])}
-              onClick={file}
-            />
+            <span className="d-flex">
+              <input
+                type="file"
+                id="image"
+                accept="image/png, image/jpeg,image/jpg"
+                className="form-control  w-100"
+                onChange={(e) => uploadImage(e.target.files[0])}
+                onClick={file}
+              />
+              {loading ? (
+                <>
+                  <div
+                    className="spinner-border mt-3 mx-2"
+                    style={{ width: "1rem", height: "1rem" }}
+                    role="status"
+                  >
+                    <span className="sr-only"></span>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+            </span>
           </div>
 
           <div className="container p-5 d-flex flex-column border border-5">
             <form method="PATCH">
               <h1 className="text-center mb-5">Update Profile</h1>
               <div className="mb-5">
-                <label htmlFor="exampleInputEmail1" className="form-label fw-bold">
+                <label
+                  htmlFor="exampleInputEmail1"
+                  className="form-label fw-bold"
+                >
                   Full Name
                 </label>
                 <input
@@ -132,7 +153,10 @@ export default function MyAccount() {
                 />
               </div>
               <div className="mb-5">
-                <label htmlFor="exampleInputEmail1" className="form-label fw-bold">
+                <label
+                  htmlFor="exampleInputEmail1"
+                  className="form-label fw-bold"
+                >
                   Email address
                 </label>
                 <input

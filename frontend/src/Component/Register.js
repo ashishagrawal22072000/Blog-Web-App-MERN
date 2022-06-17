@@ -14,6 +14,7 @@ export default function Register() {
     userimage: "",
   });
   const [disable, setDisable] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const registeruser = async (e) => {
     e.preventDefault();
@@ -45,6 +46,7 @@ export default function Register() {
       .then((res) => {
         setregister({ ...register, userimage: res.data.url });
         setDisable(false);
+        setLoading(false);
       })
       .catch((err) => {
         toast.error(err);
@@ -53,6 +55,7 @@ export default function Register() {
 
   const file = () => {
     setDisable(true);
+    setLoading(true);
   };
   return (
     <>
@@ -91,10 +94,7 @@ export default function Register() {
               />
             </div>
             <div className="mb-5">
-              <label
-                htmlFor="email"
-                className="form-label fw-bold text-light"
-              >
+              <label htmlFor="email" className="form-label fw-bold text-light">
                 Email address
               </label>
               <input
@@ -141,14 +141,29 @@ export default function Register() {
               <label htmlFor="image" className="form-label fw-bold text-light">
                 Upload Image
               </label>
-              <input
-                type="file"
-                id="image"
-                accept="image/png, image/jpeg,image/jpg"
-                className="form-control  w-100"
-                onChange={(e) => uploadImage(e.target.files[0])}
-                onClick={file}
-              />
+              <span className="d-flex">
+                <input
+                  type="file"
+                  id="image"
+                  accept="image/png, image/jpeg,image/jpg"
+                  className="form-control  w-100"
+                  onChange={(e) => uploadImage(e.target.files[0])}
+                  onClick={file}
+                />
+                {loading ? (
+                  <>
+                    <div
+                      className="spinner-border mt-2 mx-3"
+                      style={{ width: "1rem", height: "1rem" }}
+                      role="status"
+                    >
+                      <span className="sr-only"></span>
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </span>
             </div>
 
             <button
