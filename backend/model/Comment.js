@@ -18,6 +18,7 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  
 });
 
 const commentModel = mongoose.model("Comment", commentSchema);

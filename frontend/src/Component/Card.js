@@ -8,13 +8,13 @@ export default function Card({ data }) {
     <div>
       <div className="container-fluid  p-5 mt-5">
         <div className="container-fluid d-flex justify-content-center align-items-center">
-          <div className="row">
+          <div className="row mx-5">
             {data.map((ele) => {
               return (
                 <>
                   <div
                     className="card mx-3 my-3 shadow-lg border border-5 p-3"
-                    style={{ width: "50rem", height: "60rem" }}
+                    style={{ width: "30rem", height: "40rem" }}
                     key={ele._id}
                   >
                     <div className="hover">
@@ -23,14 +23,14 @@ export default function Card({ data }) {
                           className="card-img-top"
                           src={ele.imgurl}
                           alt={ele.title}
-                          height="500px"
+                          height="250px"
                         />
                       </Link>
                     </div>
 
                     <div className="card-body d-flex flex-column">
                       <div>
-                        <h2 className="card-title text-center">{ele.title}</h2>
+                        <h4 className="card-title text-center">{ele.title}</h4>
                       </div>
                       <div className="container d-flex justify-content-around my-3">
                         <h5 className="text-secondary">

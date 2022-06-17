@@ -25,20 +25,9 @@ const blog = new mongoose.Schema({
   },
   imgurl: {
     type: String,
+  
   },
-  comments: [
-    {
-      name: {
-        type: String,
-      },
-      email: {
-        type: String,
-      },
-      comment: {
-        type: String,
-      },
-    },
-  ],
+  
 });
 
 const blogModel = mongoose.model("blog", blog);

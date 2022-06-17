@@ -51,7 +51,6 @@ export default function Comment({ data }) {
       const data = await res.json();
       setGetComments(data);
       setLoading(false);
-      // console.log(data);
       if (!res.status === 200) {
         const err = new Error(data.error);
         throw err;
@@ -165,13 +164,18 @@ export default function Comment({ data }) {
                   <>
                     <div className="p-3 container-fluid d-flex">
                       <div className="d-flex">
-                        <h3 className="fw-bold bg-dark text-light p-3 rounded-circle">
-                          {ele?.name.slice(0, 2)}
+                        <h3
+                          className="fw-bold bg-dark text-light p-3"
+                          style={{ height: "50px", width: "50px" }}
+                        >
+                          {ele?.name.slice(0, 1)}
                         </h3>
                       </div>
                       <div>
                         <span className="mx-3 my-3">{ele?.name}</span>
-                        <p className="mx-3">{ele?.comment}</p>
+                        <div>
+                          <p className="mx-3">{ele?.comment}</p>
+                        </div>
                       </div>
                     </div>
                   </>
