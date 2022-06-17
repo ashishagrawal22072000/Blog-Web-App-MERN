@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import OptionCatagory from "./OptionCatagory";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { AiTwotoneDelete, AiFillEdit } from "react-icons/ai";
 export default function MyBlog() {
   const [userblog, setuserblog] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -205,7 +206,7 @@ export default function MyBlog() {
                               className="btn btn-dark"
                               onClick={() => deleteblog(ele._id)}
                             >
-                              Delete
+                              <AiTwotoneDelete />
                             </button>
                           </div>
                           <div className="mt-5">
@@ -215,7 +216,7 @@ export default function MyBlog() {
                               data-target="#exampleModal"
                               onClick={() => editblog(ele._id)}
                             >
-                              Edit
+                              <AiFillEdit />
                             </button>
                           </div>
                         </div>

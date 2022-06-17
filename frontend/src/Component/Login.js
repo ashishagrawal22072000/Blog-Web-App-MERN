@@ -4,11 +4,13 @@ import login from "../Images/login.jpg";
 import { useNavigate, Link } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 export default function Login() {
   const [logins, setlogins] = useState({
     email: "",
     password: "",
   });
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
   const loginuser = async (e) => {
@@ -32,6 +34,10 @@ export default function Login() {
     }
   };
 
+  function showPassword() {
+    setShow(true);
+  }
+
   return (
     <>
       <div className="container p-5 mt-5 d-flex justify-content-center ">
@@ -42,7 +48,10 @@ export default function Login() {
           <h1 className="text-center mt-3 ">Login YourSelf</h1>
           <form className="p-5 mt-5" method="POST">
             <div className="mb-5">
-              <label htmlFor="exampleInputEmail1" className="form-label fw-bold">
+              <label
+                htmlFor="exampleInputEmail1"
+                className="form-label fw-bold"
+              >
                 Email address
               </label>
               <input
@@ -62,23 +71,41 @@ export default function Login() {
               />
             </div>
             <div className="mb-5">
-              <label htmlFor="exampleInputPassword1" className="form-label fw-bold">
+              <label
+                htmlFor="exampleInputPassword1"
+                className="form-label fw-bold"
+              >
                 Password
               </label>
-              <input
-                type="password"
-                className="form-control border-dark border-bottom border-3 rounded-0"
-                id="exampleInputPassword1"
-                style={{
-                  backgroundColor: "transparent",
-                  outline: "none",
-                  border: 0,
-                }}
-                value={logins.password}
-                onChange={(e) =>
-                  setlogins({ ...logins, password: e.target.value })
-                }
-              />
+              <span className="d-flex">
+                <input
+                  type={`${show ? "text" : "password"}`}
+                  className="form-control border-dark border-bottom border-3 rounded-0"
+                  id="exampleInputPassword1"
+                  style={{
+                    backgroundColor: "transparent",
+                    outline: "none",
+                    border: 0,
+                  }}
+                  value={logins.password}
+                  onChange={(e) =>
+                    setlogins({ ...logins, password: e.target.value })
+                  }
+                />
+                {show ? (
+                  <>
+                    <BsFillEyeFill onClick={() => setShow(false)} />
+                  </>
+                ) : (
+                  <>
+                    <BsFillEyeSlashFill
+                      onClick={() => {
+                        setShow(true);
+                      }}
+                    />
+                  </>
+                )}
+              </span>
             </div>
 
             <button type="submit" className="btn btn-dark" onClick={loginuser}>

@@ -46,7 +46,7 @@ export default function Register() {
       .then((res) => {
         setregister({ ...register, userimage: res.data.url });
         setDisable(false);
-        setLoading(false);
+        setLoading(true);
       })
       .catch((err) => {
         toast.error(err);
