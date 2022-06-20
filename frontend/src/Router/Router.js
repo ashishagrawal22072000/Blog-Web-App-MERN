@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import ForgetPassword from "../Component/ForgetPassword";
 import Contact from "../Component/Contact";
 import CreateBlog from "../Component/CreateBlog";
 import Education from "../Component/Education";
@@ -40,6 +40,7 @@ export default function Router() {
           <Route path="/technology" element={<Technology />} />
           <Route path="/travel" element={<Travel />} />
           <Route path="/movie" element={<Movie />} />
+          <Route path="forget" element={<ForgetPassword />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -14,7 +14,9 @@ const { PORT } = require("./config");
 app.use("/user", user);
 app.use("/blog", blog);
 app.use("/comment", comment); //
-
+app.set("views", __dirname + "/views");
+app.set("view engine", "hbs");
+console.log(__dirname + "/views");
 app.listen(PORT, () => {
   console.log("listening on port" + PORT);
 });

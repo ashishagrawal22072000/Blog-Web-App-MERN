@@ -1,4 +1,5 @@
 const express = require("express");
+// const app = express();
 const router = express.Router();
 require("../db/conn");
 const bcrypt = require("bcryptjs");
@@ -7,10 +8,23 @@ const cookieParser = require("cookie-parser");
 const { SECRET_KEY } = require("../config");
 router.use(cookieParser());
 router.use(express.json());
+const verifyEmail = require("../middleware/emailAuth");
 const authentication = require("../middleware/authenticate");
 const userModel = require("../model/schema");
 const blogModel = require("../model/BlogSchema");
-const { body,validationResult } = require("express-validator");
+const { body, validationResult } = require("express-validator");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
+const { mail, pass } = require("../config");
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: mail,
+    pass: pass,
+  },
+});
+// app.set("views", __dirname + "/views");
+// app.set("view engine", "hbs");
 router.post(
   "/register",
   [
@@ -72,10 +86,29 @@ router.post(
         email,
         password,
         userimage,
+        emailToken: crypto.randomBytes(64).toString("hex"),
+        isVerified: false,
       });
 
       const a = await registeruser.save();
-      res.status(200).json({ message: "user register successfully" });
+      let mailOptions = {
+        from: mail,
+        to: registeruser.email,
+        subject: `Blog.com - Verify Your Email`,
+        html: `<h2>Thank You ${registeruser.username} for registering on our site</h2>
+        <h4>Please Verify Your Email To Continue...</h4>
+        <a href="http://${req.headers.host}/user/verify_email?token=${registeruser.emailToken}">Verify Your Email</a>
+        `,
+      };
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res
+            .status(200)
+            .json({ message: "Verification Email Sent Successfully" });
+        }
+      });
       console.log(a);
     } catch (err) {
       console.log(err);
@@ -99,6 +132,7 @@ router.post(
       return true;
     }),
   ],
+  verifyEmail,
   async (req, res) => {
     try {
       const { email, password } = req.body;
@@ -175,7 +209,7 @@ router.patch(
       if (!/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(value)) {
         throw new Error("Invalid Email");
       }
-      return true
+      return true;
     }),
   ],
   authentication,
@@ -195,5 +229,108 @@ router.patch(
     }
   }
 );
+
+router.get("/verify_email", async (req, res) => {
+  try {
+    const token = req.query.token;
+    const user = await userModel.findOne({ emailToken: token });
+    if (user) {
+      user.emailToken = null;
+      user.isVerified = true;
+      await user.save();
+      res
+        .status(200)
+        .send(
+          "<h1 style={color : green, margin-left : auto}>Email Verified Successfully</h1>"
+        );
+    } else {
+      res
+        .status(400)
+        .send(
+          "<h1 style={color : red, margin-left : auto}>Email Is Not Verified</h1>"
+        );
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/forget-password", async (req, res) => {
+  try {
+    const user = await userModel.findOne({ email: req.body.email });
+    if (user) {
+      const payload = {
+        id: user.id,
+        email: user.email,
+      };
+      const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "20m" });
+      const mailOptions = {
+        from: mail,
+        to: req.body.email,
+        subject: "Blog.com - Generate New Password",
+        html: `<h4>Click To Generate New Password</h4>
+        <a href="http://${req.headers.host}/user/reset-password/${user._id}/${token}">Here</a>
+        `,
+      };
+
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          res.status(400).send({ error: "SomeThing Went Wrong" });
+          console.log(err);
+        } else {
+          res
+            .status(200)
+            .send({ message: "Please Check Your Email for further Process" });
+        }
+      });
+    } else {
+      res.status(400).send({ error: "Please Check Your Email First" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get("/reset-password/:id/:token", async (req, res) => {
+  try {
+    const { id, token } = req.params;
+    console.log(id, token);
+    const user = await userModel.findOne({ _id: id });
+    if (user) {
+      const decode = jwt.verify(token, SECRET_KEY);
+      res.render("generate", { email: user.email });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/reset-password/:id/:token", async (req, res) => {
+  console.log("Api Hit", req.params.id);
+  console.log(req.body);
+  try {
+    const { id } = req.params;
+    const user = await userModel.findOne({ _id: id });
+    if (user) {
+      console.log("this is user", user);
+      const { password, confirmPass } = req.body;
+      if (confirmPass === password) {
+        console.log(req.body.password, req.body.confirmPass);
+        const newUser = await userModel.findByIdAndUpdate(
+          { _id: id },
+          { password: password }
+        );
+        cosole.log(password);
+        await newUser.save();
+        console.log(newUser);
+        res.status(200).send("Password Reset Successfully");
+      } else {
+        res.status(400).send("Password and confirm Password didn't match");
+      }
+    } else {
+      res.status(400).send("User Not Found");
+    }
+  } catch (err) {}
+});
 
 module.exports = router;

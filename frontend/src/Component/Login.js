@@ -70,7 +70,7 @@ export default function Login() {
                 }
               />
             </div>
-            <div className="mb-5">
+            <div className="mb-2">
               <label
                 htmlFor="exampleInputPassword1"
                 className="form-label fw-bold"
@@ -110,6 +110,9 @@ export default function Login() {
                   </>
                 )}
               </span>
+            </div>
+            <div className="mb-5">
+              <Link to="/forget">Forgot Password</Link>
             </div>
 
             <button type="submit" className="btn btn-dark" onClick={loginuser}>

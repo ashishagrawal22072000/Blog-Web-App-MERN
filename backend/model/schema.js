@@ -19,6 +19,12 @@ const user = new mongoose.Schema({
   userimage: {
     type: String,
   },
+  emailToken: {
+    type: String,
+  },
+  isVerified: {
+    type: Boolean,
+  },
 });
 
 user.pre("save", async function (next) {

@@ -1,0 +1,73 @@
+<html lang="en">
+  <link>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"></link>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="container p-5 mt-5 d-flex justify-content-center ">
+        <div
+          class="container p-3 border"
+          {{!-- style={{ backgroundColor: "#F5F5F5" }} --}}
+        >
+          <h1 class="text-center mt-3 ">Reset Password</h1>
+          <form class="p-5 mt-5" method="POST">
+            <div class="mb-5">
+              <label
+                htmlFor="password"
+                class="form-label fw-bold"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                class="form-control border-dark border-bottom border-3 rounded-0"
+                id="password"
+                {{!-- aria-describedby="emailHelp" --}}
+                name="password"
+              />
+            </div>
+            <div class="mb-2">
+              <label
+                htmlFor="cpassword"
+                class="form-label fw-bold"
+              >
+                Confirm Password
+              </label>
+                <input
+                  type="password"
+                  class="form-control border-dark border-bottom border-3 rounded-0"
+                  id="cpassword"
+                  name="confirmPass"
+                />
+                
+            </div>
+            {{!-- <div class="mb-5">
+              <Link to="/forget">Forgot Password</Link>
+            </div> --}}
+
+            <button type="submit" class="btn btn-danger mt-4">
+              Reset 
+            </button>
+            {{!-- <div>
+              <p class="fw-bold mt-3 text-center ">
+                Don't Have An Account ?{" "}
+                <Link
+                  to="/register"
+                  class="text-danger text-decoration-none"
+                >
+                  Register
+                </Link>
+              </p>
+            </div> --}}
+          </form>
+        </div>
+        <div class="container border border-5">
+          <img src="https://img.freepik.com/free-vector/reset-password-concept-illustration_114360-7866.jpg?t=st=1655710535~exp=1655711135~hmac=63666423cafdcefddf17b0ec0ebef84e9d88fded70c9f11cd291dd64dfc547b9&w=1380" alt="reset" height="400px" width="400px" />
+        </div>
+      </div>
+  </body>
+</html>
