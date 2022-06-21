@@ -5,8 +5,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 export default function ForgetPassword() {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const sendMail = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const res = await fetch("/user/forget-password", {
       method: "POST",
       headers: {
@@ -16,6 +18,7 @@ export default function ForgetPassword() {
     });
 
     const data = await res.json();
+    setLoading(false);
     if (res.status === 400 || !data) {
       //   toast.error(data.error[0].msg);
       toast.error(data.error);
@@ -56,12 +59,38 @@ export default function ForgetPassword() {
 
               <div className="container d-flex">
                 <button
+                  className="btn btn-primary fw-bold w-50"
+                  type="submit"
+                  onClick={sendMail}
+                >
+                  <span className="sr-only mx-3">Send</span>
+                  {loading ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </button>
+                {/* <button className="btn btn-primary" type="button" disabled>
+                  <span
+                    className="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  Loading...
+                </button>
+                <button
                   type="submit"
                   className="btn btn-success fw-bold w-50"
                   onClick={sendMail}
                 >
                   Send
-                </button>
+                </button> */}
               </div>
             </form>
           </div>

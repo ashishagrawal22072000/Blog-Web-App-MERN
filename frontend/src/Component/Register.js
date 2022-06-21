@@ -15,10 +15,11 @@ export default function Register() {
   });
   const [disable, setDisable] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [spinner, setSpinner] = useState(false);
   const navigate = useNavigate();
-  const registeruser = async (e) => {
+  const registerUser = async (e) => {
     e.preventDefault();
-
+    setSpinner(true);
     const { username, email, password, userimage } = register;
 
     const res = await fetch("/user/register", {
@@ -30,6 +31,7 @@ export default function Register() {
     });
 
     const data = await res.json();
+    setSpinner(false);
     if (res.status === 400 || !data) {
       toast.error(data.error[0].msg);
     } else {
@@ -38,6 +40,7 @@ export default function Register() {
     }
   };
   const uploadImage = (file) => {
+    console.log(process.env)
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "m5nzhuoo");
@@ -50,6 +53,8 @@ export default function Register() {
       })
       .catch((err) => {
         toast.error(err);
+        setDisable(false);
+        setLoading(false);
       });
   };
 
@@ -165,15 +170,33 @@ export default function Register() {
                 )}
               </span>
             </div>
-
             <button
+              className="btn btn-primary fw-bold w-50"
+              type="submit"
+              onClick={registerUser}
+              disabled={disable}
+            >
+              <span className="sr-only mx-3">Register</span>
+              {spinner ? (
+                <>
+                  <span
+                    className="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                </>
+              ) : (
+                <></>
+              )}
+            </button>
+            {/* <button
               type="submit"
               className="btn btn-dark"
               onClick={registeruser}
               disabled={disable}
             >
               Register
-            </button>
+            </button> */}
             <div>
               <p className="fw-bold mt-3 text-center ">
                 Already Have An Account ?{" "}

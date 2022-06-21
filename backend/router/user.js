@@ -75,12 +75,13 @@ router.post(
   ],
   async (req, res) => {
     try {
+      // console.log(crypto.randomBytes(10).toString('hex'));
       const { username, email, password, userimage } = req.body;
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         res.status(400).json({ error: errors.array() });
       }
-
+      // crypto.randomBytes(64).toString("hex")
       const registeruser = new userModel({
         username,
         email,
@@ -310,6 +311,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
   console.log(req.body);
   try {
     const { id } = req.params;
+    console.log(req.body);
     const user = await userModel.findOne({ _id: id });
     if (user) {
       console.log("this is user", user);
@@ -320,7 +322,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
           { _id: id },
           { password: password }
         );
-        cosole.log(password);
+        console.log(password);
         await newUser.save();
         console.log(newUser);
         res.status(200).send("Password Reset Successfully");
@@ -330,7 +332,9 @@ router.post("/reset-password/:id/:token", async (req, res) => {
     } else {
       res.status(400).send("User Not Found");
     }
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = router;
