@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "./Card";
 import Navbar from "./Navbar";
-
+import fashionImg from "../Images/fashion.jpg";
 export default function Fashion() {
   const [blog, setblog] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,6 +38,14 @@ export default function Fashion() {
   return (
     <>
       <Navbar />
+      <div className="card bg-dark text-white">
+        <img
+          className="card-img"
+          src={fashionImg}
+          alt="Card image"
+          height="900px"
+        />
+      </div>
       {loading ? (
         <>
           <div className="container d-flex justify-content-center align-item-center mt-5">

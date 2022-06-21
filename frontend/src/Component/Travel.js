@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "./Card";
 import Navbar from "./Navbar";
+import travelImg from "../Images/travel.jpg";
 export default function Travel() {
   const [blog, setblog] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,6 +38,9 @@ export default function Travel() {
   return (
     <>
       <Navbar />
+      <div className="card bg-dark text-white">
+        <img className="card-img" src={travelImg} alt="Card image" />
+      </div>
       {loading ? (
         <>
           <div className="container d-flex justify-content-center align-item-center mt-5">

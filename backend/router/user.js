@@ -82,35 +82,37 @@ router.post(
         res.status(400).json({ error: errors.array() });
       }
       // crypto.randomBytes(64).toString("hex")
-      const registeruser = new userModel({
-        username,
-        email,
-        password,
-        userimage,
-        emailToken: crypto.randomBytes(64).toString("hex"),
-        isVerified: false,
-      });
+      else {
+        const registeruser = new userModel({
+          username,
+          email,
+          password,
+          userimage,
+          emailToken: crypto.randomBytes(64).toString("hex"),
+          isVerified: false,
+        });
 
-      const a = await registeruser.save();
-      let mailOptions = {
-        from: mail,
-        to: registeruser.email,
-        subject: `Blog.com - Verify Your Email`,
-        html: `<h2>Thank You ${registeruser.username} for registering on our site</h2>
+        const a = await registeruser.save();
+        let mailOptions = {
+          from: mail,
+          to: registeruser.email,
+          subject: `Blog.com - Verify Your Email`,
+          html: `<h2>Thank You ${registeruser.username} for registering on our site</h2>
         <h4>Please Verify Your Email To Continue...</h4>
         <a href="http://${req.headers.host}/user/verify_email?token=${registeruser.emailToken}">Verify Your Email</a>
         `,
-      };
-      transporter.sendMail(mailOptions, (err, info) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res
-            .status(200)
-            .json({ message: "Verification Email Sent Successfully" });
-        }
-      });
-      console.log(a);
+        };
+        transporter.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res
+              .status(200)
+              .json({ message: "Verification Email Sent Successfully" });
+          }
+        });
+        console.log(a);
+      }
     } catch (err) {
       console.log(err);
     }

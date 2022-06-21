@@ -169,7 +169,7 @@ router.post(
 router.patch(
   "/update",
   [
-    body("title", "Title length must be of 20").trim().isLength({ min: 20 }),
+    body("title", "Title length must be of 10").trim().isLength({ min: 10 }),
     body("content", "Content length must be of 1000")
       .trim()
       .isLength({ min: 1000 }),

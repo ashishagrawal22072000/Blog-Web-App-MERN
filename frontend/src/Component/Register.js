@@ -40,7 +40,7 @@ export default function Register() {
     }
   };
   const uploadImage = (file) => {
-    console.log(process.env)
+    console.log(process.env);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "m5nzhuoo");
@@ -171,7 +171,7 @@ export default function Register() {
               </span>
             </div>
             <button
-              className="btn btn-primary fw-bold w-50"
+              className="btn btn-dark fw-bold"
               type="submit"
               onClick={registerUser}
               disabled={disable}

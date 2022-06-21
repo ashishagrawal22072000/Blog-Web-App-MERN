@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "./Card";
 import Navbar from "./Navbar";
-
+import technoImg from "../Images/tech.jpg";
 export default function Technology() {
   const [blog, setblog] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ export default function Technology() {
 
       const data = await res.json();
       setblog(data);
-      setLoading(false)
+      setLoading(false);
 
       if (!res.status === 200) {
         const err = new Error(data.error);
@@ -38,8 +38,16 @@ export default function Technology() {
   }, []);
   return (
     <>
-    <Navbar />
-    {loading ? (
+      <Navbar />
+      <div className="card bg-dark text-white">
+        <img
+          className="card-img"
+          src={technoImg}
+          alt="Card image"
+          height="900px"
+        />
+      </div>
+      {loading ? (
         <>
           <div className="container d-flex justify-content-center align-item-center mt-5">
             <div className="container d-flex justify-content-center align-item-center mt-5">
