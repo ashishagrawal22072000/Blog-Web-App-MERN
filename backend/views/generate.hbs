@@ -14,7 +14,7 @@
          
         >
           <h1 class="text-center mt-3 ">Reset Password</h1>
-          <form class="p-5 mt-5" method="POST">
+          <form class="p-5 mt-5" method="POST" action="/user/reset-password/{{id}}/{{token}}">
             <div class="mb-5">
               <label
                 htmlFor="password"
@@ -27,6 +27,7 @@
                 class="form-control border-dark border-bottom border-3 rounded-0"
                 id="password"
                 name="password"
+                value=""
               />
             </div>
             <div class="mb-2">
@@ -41,6 +42,7 @@
                   class="form-control border-dark border-bottom border-3 rounded-0"
                   id="cpassword"
                   name="confirmPass"
+                  value=""
                 />
                 
             </div>
@@ -68,5 +70,17 @@
           <img src="https://img.freepik.com/free-vector/reset-password-concept-illustration_114360-7866.jpg?t=st=1655710535~exp=1655711135~hmac=63666423cafdcefddf17b0ec0ebef84e9d88fded70c9f11cd291dd64dfc547b9&w=1380" alt="reset" height="400px" width="400px" />
         </div>
       </div>
+
+
+      <script>
+        function reset(){
+        let a = document.getElementById("password");
+        let b = document.getElementById("cpassword");
+        console.log(a);
+        console.log(b)
+        }
+        
+      </script>
+
   </body>
 </html>

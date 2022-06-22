@@ -5,7 +5,7 @@ require("../db/conn");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const { SECRET_KEY } = require("../config");
+const { SECRET_KEY, mail, pass, service } = require("../config");
 router.use(cookieParser());
 router.use(express.json());
 const verifyEmail = require("../middleware/emailAuth");
@@ -15,9 +15,10 @@ const blogModel = require("../model/BlogSchema");
 const { body, validationResult } = require("express-validator");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
-const { mail, pass } = require("../config");
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: service,
+  port: 587,
+  secure: true,
   auth: {
     user: mail,
     pass: pass,
@@ -241,17 +242,17 @@ router.get("/verify_email", async (req, res) => {
       user.emailToken = null;
       user.isVerified = true;
       await user.save();
-      res
-        .status(200)
-        .send(
-          "<h1 style={color : green, margin-left : auto}>Email Verified Successfully</h1>"
-        );
+      res.status(200).send(
+        `<h1 style='text-align : center; color : green'>Email Verified Successfully</h1>
+          <h3 style='text-align : center';>Go To Login Page To Login</h3>
+          `
+      );
     } else {
-      res
-        .status(400)
-        .send(
-          "<h1 style={color : red, margin-left : auto}>Email Is Not Verified</h1>"
-        );
+      res.status(400).send(
+        `<h1 style='text-align : center; color : red'>Email Is Not Verified</h1>
+          <h3 style='text-align : center'>Please Check Your Email or Go To Login</h3>
+          `
+      );
     }
   } catch (err) {
     console.log(err);
@@ -287,7 +288,7 @@ router.post("/forget-password", async (req, res) => {
         }
       });
     } else {
-      res.status(400).send({ error: "Please Check Your Email First" });
+      res.status(400).send({ error: "Email Does Not Exist" });
     }
   } catch (err) {
     console.log(err);
@@ -301,7 +302,14 @@ router.get("/reset-password/:id/:token", async (req, res) => {
     const user = await userModel.findOne({ _id: id });
     if (user) {
       const decode = jwt.verify(token, SECRET_KEY);
-      res.render("generate", { email: user.email });
+      res.render("generate", { id: id, token: token, host: req.headers.host });
+      // res.send(`
+      // <form method="POST" action="/user/reset-password/${id}/${token}>
+      //   <input type="password" name="password" value=""/>
+      //   <input type="password" name="cpassword" value="" />
+      //   <button type="submit">Reset</button>
+      // </form>
+      // `);
     }
   } catch (err) {
     console.log(err);
@@ -310,30 +318,30 @@ router.get("/reset-password/:id/:token", async (req, res) => {
 
 router.post("/reset-password/:id/:token", async (req, res) => {
   console.log("Api Hit", req.params.id);
-  console.log(req.body);
+  console.log("This is body", req.body);
   try {
     const { id } = req.params;
     console.log(req.body);
-    const user = await userModel.findOne({ _id: id });
-    if (user) {
-      console.log("this is user", user);
-      const { password, confirmPass } = req.body;
-      if (confirmPass === password) {
-        console.log(req.body.password, req.body.confirmPass);
-        const newUser = await userModel.findByIdAndUpdate(
-          { _id: id },
-          { password: password }
-        );
-        console.log(password);
-        await newUser.save();
-        console.log(newUser);
-        res.status(200).send("Password Reset Successfully");
-      } else {
-        res.status(400).send("Password and confirm Password didn't match");
-      }
-    } else {
-      res.status(400).send("User Not Found");
-    }
+    // const user = await userModel.findOne({ _id: id });
+    // if (user) {
+    //   console.log("this is user", user);
+    //   const { password, confirmPass } = req.body;
+    //   if (confirmPass === password) {
+    //     console.log(req.body.password, req.body.confirmPass);
+    //     const newUser = await userModel.findByIdAndUpdate(
+    //       { _id: id },
+    //       { $set: { password: password } }
+    //     );
+    //     console.log(password);
+    //     await newUser.save();
+    //     console.log(newUser);
+    //     res.status(200).send("Password Reset Successfully");
+    //   } else {
+    //     res.status(400).send("Password and confirm Password didn't match");
+    //   }
+    // } else {
+    //   res.status(400).send("User Not Found");
+    // }
   } catch (err) {
     console.log(err);
   }
